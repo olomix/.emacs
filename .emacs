@@ -17,7 +17,6 @@
 (setq py-pyflakes-command "/Users/alek/Documents/virtualenvs/uaprom-2.7/bin/pyflakes")
 
 (add-to-list 'exec-path "/usr/local/bin")
-(add-to-list 'exec-path "~/Documents/src/go/bin")
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (unless
@@ -32,6 +31,26 @@
 	markdown-mode
 	clojure-mode
 	auto-complete
+	haskell-mode
+	rust-mode
+	purescript-mode
+
+	(:name go-mode
+	       :after (progn
+			(add-hook 'before-save-hook #'gofmt-before-save)
+			(setenv "GOPATH" (substitute-env-vars "${HOME}/Documents/src/go"))
+			(setenv "GOROOT" "/usr/local/opt/go/libexec")
+			(setq godef-command (substitute-env-vars "${GOPATH}/bin/godef"))))
+	go-oracle
+	go-autocomplete
+	go-flymake
+	go-rename
+
+	(:name fiplr
+	       :after (progn (global-set-key (kbd "C-x f") 'fiplr-find-file)))
+	ag
+	projectile
+
 	(:name color-theme-zenburn
 	       :after (load-theme 'zenburn t))
 	(:name python-mode :after (progn (add-hook 'python-mode-hook '(lambda () (hl-line-mode)))))
@@ -39,40 +58,21 @@
 	       :before (progn (setq-default fci-rule-column 80))
 	       :after (progn
 			(add-hook 'python-mode-hook '(lambda () (fci-mode)))))
-	(:name go-mode :after (progn (add-hook 'before-save-hook 'gofmt-before-save)))
-	(:name gocode
-	       :description "Gocode"
-	       :type git
-	       ;; :pkgname nsf/gocode
-	       :url "https://github.com/nsf/gocode"
-	       :load-path ("emacs")
-	       :features go-autocomplete
-	       :depends auto-complete
-	       )
-	(:name goflymake
-	       :description "goflymake"
-	       :type git
-	       :url "https://github.com/dougm/goflymake"
-	       :features go-flymake
-	       )
-	;; go-oracle
-	;; (:name go-oracle
-	;;        :description "go-oracle"
-	;;        :type hg
-	;;        :url "https://code.google.com/p/go.tools/"
-	;;        :load-path ("cmd/oracle")
-	;;        :features oracle
+	;; (:name gocode
+	;;        :description "Gocode"
+	;;        :type git
+	;;        ;; :pkgname nsf/gocode
+	;;        :url "https://github.com/nsf/gocode"
+	;;        :load-path ("emacs")
+	;;        :features go-autocomplete
+	;;        :depends auto-complete
 	;;        )
-	(:name go-oracle
-	       :description "Integration of the Go 'oracle' analysis tool into Emacs"
-	       :type go
-	       :pkgname "golang.org/x/tools/cmd/oracle"
-	       :load-path "src/golang.org/x/tools/cmd/oracle"
-	       :prepare (progn
-			  (autoload 'go-oracle-mode "go-oracle" nil t)
-			  (add-hook 'go-mode-hook 'go-oracle-mode))
-	       :post-init (progn
-			    (setq go-oracle-command (concat default-directory "bin/oracle"))))
+	;; (:name goflymake
+	;;        :description "goflymake"
+	;;        :type git
+	;;        :url "https://github.com/dougm/goflymake"
+	;;        :features go-flymake
+	;;        )
 	
 	))
 (el-get 'sync (mapcar 'el-get-source-name el-get-sources))
@@ -148,7 +148,8 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("e4e97731f52a5237f37ceb2423cb327778c7d3af7dc831788473d4a76bcc9760" default))))
+    ("e4e97731f52a5237f37ceb2423cb327778c7d3af7dc831788473d4a76bcc9760" default)))
+ '(purescript-mode-hook (quote (turn-on-purescript-indentation))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
