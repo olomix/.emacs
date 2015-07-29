@@ -2,7 +2,6 @@
 (ido-mode t)
 (show-paren-mode)
 
-(setq-default solarized-contrast 'high)
 (setq-default inhibit-startup-screen t)
 
 (require 'uniquify)
@@ -13,11 +12,8 @@
 (setq-default dired-omit-files-p t)
 
 (setq sql-postgres-program "/usr/local/bin/psql")
-(setq python-pep8-command "/Users/alek/Documents/virtualenvs/uaprom-2.7/bin/pep8")
-(setq py-pyflakes-command "/Users/alek/Documents/virtualenvs/uaprom-2.7/bin/pyflakes")
 
 (add-to-list 'exec-path "/usr/local/bin")
-
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (unless
     (require 'el-get nil t)
@@ -26,53 +22,54 @@
     (goto-char (point-max)) (eval-print-last-sexp)))
 (setq el-get-sources
       '(
+	json-reformat
+	restclient
 	coffee-mode
 	multiple-cursors
 	markdown-mode
 	clojure-mode
 	auto-complete
 	haskell-mode
-	rust-mode
+    rust-mode
 	purescript-mode
+	yaml-mode
+	python-mode
 
 	(:name go-mode
 	       :after (progn
-			(add-hook 'before-save-hook #'gofmt-before-save)
-			(setenv "GOPATH" (substitute-env-vars "${HOME}/Documents/src/go"))
-			(setenv "GOROOT" "/usr/local/opt/go/libexec")
-			(setq godef-command (substitute-env-vars "${GOPATH}/bin/godef"))))
+					(add-hook 'before-save-hook #'gofmt-before-save)
+					(setenv "GOPATH" (substitute-env-vars "${HOME}/Documents/src/go"))
+					(setenv "GOROOT" "/usr/local/opt/go/libexec")
+					(setq godef-command (substitute-env-vars "${GOPATH}/bin/godef"))))
 	go-oracle
 	go-autocomplete
 	go-flymake
 	go-rename
 
-	(:name fiplr
-	       :after (progn (global-set-key (kbd "C-x f") 'fiplr-find-file)))
 	ag
 	projectile
+	(:name fiplr
+		   :after (progn
+					(global-set-key (kbd "C-x f") 'fiplr-find-file)))
+	(:name avy
+		   :after(progn
+				   (global-set-key (kbd "C-:") 'avy-goto-char)
+				   (global-set-key (kbd "C-'") 'avy-goto-char-2)
+				   (global-set-key (kbd "M-g f") 'avy-goto-line)
+				   (global-set-key (kbd "M-g w") 'avy-goto-word-1)
+				   (global-set-key (kbd "M-g e") 'avy-goto-word-0)))
 
 	(:name color-theme-zenburn
-	       :after (load-theme 'zenburn t))
-	(:name python-mode :after (progn (add-hook 'python-mode-hook '(lambda () (hl-line-mode)))))
+	       :description "Just some alien fruit salad to keep you in the zone"
+	       :type git
+	       :url "https://github.com/bbatsov/zenburn-emacs"
+	       :load "zenburn-theme.el")
+	
 	(:name fill-column-indicator
 	       :before (progn (setq-default fci-rule-column 80))
 	       :after (progn
-			(add-hook 'python-mode-hook '(lambda () (fci-mode)))))
-	;; (:name gocode
-	;;        :description "Gocode"
-	;;        :type git
-	;;        ;; :pkgname nsf/gocode
-	;;        :url "https://github.com/nsf/gocode"
-	;;        :load-path ("emacs")
-	;;        :features go-autocomplete
-	;;        :depends auto-complete
-	;;        )
-	;; (:name goflymake
-	;;        :description "goflymake"
-	;;        :type git
-	;;        :url "https://github.com/dougm/goflymake"
-	;;        :features go-flymake
-	;;        )
+			(add-hook 'python-mode-hook '(lambda () (fci-mode)))
+			(add-hook 'go-mode-hook '(lambda () (fci-mode)))))
 	
 	))
 (el-get 'sync (mapcar 'el-get-source-name el-get-sources))
@@ -146,10 +143,25 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes
+ '(org-agenda-files
    (quote
-    ("e4e97731f52a5237f37ceb2423cb327778c7d3af7dc831788473d4a76bcc9760" default)))
- '(purescript-mode-hook (quote (turn-on-purescript-indentation))))
+	("~/Documents/Notes/uaprom.org" "~/Documents/Notes/work.org")))
+ '(purescript-mode-hook (quote (turn-on-purescript-indentation)))
+ '(sql-connection-alist
+   (quote
+	(("uaprom"
+	  (sql-product
+	   (quote postgres))
+	  (sql-user "postgres")
+	  (sql-database "uaprom")
+	  (sql-server "db.uaprom"))
+	 ("localhost"
+	  (sql-product
+	   (quote postgres))
+	  (sql-user "postgres")
+	  (sql-database "postgres")
+	  (sql-server "localhost")))))
+ '(tab-width 4))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
