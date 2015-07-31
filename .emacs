@@ -34,6 +34,7 @@
 	haskell-mode
 	rust-mode
 	purescript-mode
+	yaml-mode
 
 	(:name go-mode
 	       :after (progn
@@ -149,7 +150,22 @@
  '(custom-safe-themes
    (quote
     ("e4e97731f52a5237f37ceb2423cb327778c7d3af7dc831788473d4a76bcc9760" default)))
- '(purescript-mode-hook (quote (turn-on-purescript-indentation))))
+ '(purescript-mode-hook (quote (turn-on-purescript-indentation)))
+  '(sql-connection-alist
+   (quote
+	(("uaprom"
+	  (sql-product
+	   (quote postgres))
+	  (sql-user "postgres")
+	  (sql-database "uaprom")
+	  (sql-server "db.uaprom"))
+	 ("localhost"
+	  (sql-product
+	   (quote postgres))
+	  (sql-user "alek")
+	  (sql-database "postgres")
+	  (sql-server "localhost")))))
+ )
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
