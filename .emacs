@@ -22,62 +22,64 @@
     (goto-char (point-max)) (eval-print-last-sexp)))
 (setq el-get-sources
       '(
-	color-theme-zenburn
-	json-reformat
-	restclient
-	coffee-mode
-	multiple-cursors
-	markdown-mode
-	clojure-mode
-	auto-complete
-	haskell-mode
-	rust-mode
-	(:name emacs-racer
-		   :after (progn
-					(setq racer-cmd (substitute-env-vars "${HOME}/.cargo/bin/racer"))
-					(setq racer-rust-src-path (substitute-env-vars "${HOME}/Documents/src/rustc-1.5.0/src"))
-					(add-hook 'rust-mode-hook #'racer-mode)
-					(add-hook 'racer-mode-hook #'eldoc-mode)
-					(add-hook 'racer-mode-hook #'company-mode)
-					(global-set-key (kbd "TAB") #'company-indent-or-complete-common)
-					(setq company-tooltip-align-annotations t)
-					)
-		   )
-	purescript-mode
-	yaml-mode
-	python-mode
-
-	(:name go-mode
-	       :after (progn
-					(add-hook 'before-save-hook #'gofmt-before-save)
-					(setenv "GOPATH" (substitute-env-vars "${HOME}/Documents/src/go"))
-					(setenv "GOROOT" "/usr/local/opt/go/libexec")
-					(setq godef-command (substitute-env-vars "${GOPATH}/bin/godef"))))
-	go-oracle
-	go-autocomplete
-	go-flymake
-	go-rename
-
-	ag
-	projectile
-	(:name fiplr
-		   :after (progn
-					(global-set-key (kbd "C-x f") 'fiplr-find-file)))
-	(:name avy
-		   :after(progn
-				   (global-set-key (kbd "C-:") 'avy-goto-char)
-				   (global-set-key (kbd "C-'") 'avy-goto-char-2)
-				   (global-set-key (kbd "M-g f") 'avy-goto-line)
-				   (global-set-key (kbd "M-g w") 'avy-goto-word-1)
-				   (global-set-key (kbd "M-g e") 'avy-goto-word-0)))
-
-	(:name fill-column-indicator
-	       :before (progn (setq-default fci-rule-column 80))
-	       :after (progn
-			(add-hook 'python-mode-hook '(lambda () (fci-mode)))
-			(add-hook 'go-mode-hook '(lambda () (fci-mode)))))
-	
-	))
+		(:name color-theme-zenburn
+			   :after (load-theme 'zenburn t)
+			   )
+		json-reformat
+		restclient
+		coffee-mode
+		multiple-cursors
+		markdown-mode
+		clojure-mode
+		auto-complete
+		haskell-mode
+		rust-mode
+		;; (:name emacs-racer
+		;; 	   :after (progn
+		;; 				(setq racer-cmd (substitute-env-vars "${HOME}/.cargo/bin/racer"))
+		;; 				(setq racer-rust-src-path (substitute-env-vars "${HOME}/Documents/src/rustc-1.5.0/src"))
+		;; 				(add-hook 'rust-mode-hook #'racer-mode)
+		;; 				(add-hook 'racer-mode-hook #'eldoc-mode)
+		;; 				(add-hook 'racer-mode-hook #'company-mode)
+		;; 				(global-set-key (kbd "TAB") #'company-indent-or-complete-common)
+		;; 				(setq company-tooltip-align-annotations t)
+		;; 				)
+		;; 	   )
+		purescript-mode
+		yaml-mode
+		python-mode
+		
+		(:name go-mode
+			   :after (progn
+						(add-hook 'before-save-hook #'gofmt-before-save)
+						(setenv "GOPATH" (substitute-env-vars "${HOME}/Documents/src/go"))
+						(setenv "GOROOT" "/usr/local/opt/go/libexec")
+						(setq godef-command (substitute-env-vars "${GOPATH}/bin/godef"))))
+		go-oracle
+		go-autocomplete
+		go-flymake
+		go-rename
+		
+		ag
+		projectile
+		(:name fiplr
+			   :after (progn
+						(global-set-key (kbd "C-x f") 'fiplr-find-file)))
+		(:name avy
+			   :after(progn
+					   (global-set-key (kbd "C-:") 'avy-goto-char)
+					   (global-set-key (kbd "C-'") 'avy-goto-char-2)
+					   (global-set-key (kbd "M-g f") 'avy-goto-line)
+					   (global-set-key (kbd "M-g w") 'avy-goto-word-1)
+					   (global-set-key (kbd "M-g e") 'avy-goto-word-0)))
+		
+		(:name fill-column-indicator
+			   :before (progn (setq-default fci-rule-column 80))
+			   :after (progn
+						(add-hook 'python-mode-hook '(lambda () (fci-mode)))
+						(add-hook 'go-mode-hook '(lambda () (fci-mode)))))
+		
+		))
 (el-get 'sync (mapcar 'el-get-source-name el-get-sources))
 
 (if window-system
@@ -149,6 +151,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+	("e426d22803ef4c21c1735ca0cb638e80e0893cac629ce3b879b94bd3bb67a7a0" default)))
  '(org-agenda-files
    (quote
 	("~/Documents/Notes/uaprom.org" "~/Documents/Notes/work.org")))
@@ -170,42 +175,47 @@
 	  (sql-server "localhost")
 	  (sql-port 5432))
 	 ("analytics-uaprom"
-	  (sql-product (quote postgres))
+	  (sql-product
+	   (quote postgres))
 	  (sql-user "postgres")
 	  (sql-database "uaprom")
 	  (sql-server "analytics.uaprom")
 	  (sql-port 5437))
 	 ("analytics-ruprom"
-	  (sql-product (quote postgres))
+	  (sql-product
+	   (quote postgres))
 	  (sql-user "postgres")
 	  (sql-database "ruprom")
 	  (sql-server "analytics.uaprom")
 	  (sql-port 5440))
 	 ("analytics-byprom"
-	  (sql-product (quote postgres))
+	  (sql-product
+	   (quote postgres))
 	  (sql-user "postgres")
 	  (sql-database "belprom")
 	  (sql-server "analytics.uaprom")
 	  (sql-port 5441))
 	 ("analytics-kzprom"
-	  (sql-product (quote postgres))
+	  (sql-product
+	   (quote postgres))
 	  (sql-user "postgres")
 	  (sql-database "kazprom")
 	  (sql-server "analytics.uaprom")
 	  (sql-port 5446))
 	 ("analytics-mdprom"
-	  (sql-product (quote postgres))
+	  (sql-product
+	   (quote postgres))
 	  (sql-user "postgres")
 	  (sql-database "mdprom")
 	  (sql-server "analytics.uaprom")
 	  (sql-port 5439))
 	 ("analytics-cms"
-	  (sql-product (quote postgres))
+	  (sql-product
+	   (quote postgres))
 	  (sql-user "postgres")
 	  (sql-database "postgres")
 	  (sql-server "analytics.uaprom")
-	  (sql-port 5438))
-	 )))
+	  (sql-port 5438)))))
  '(tab-width 4))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
