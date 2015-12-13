@@ -22,6 +22,7 @@
     (goto-char (point-max)) (eval-print-last-sexp)))
 (setq el-get-sources
       '(
+	color-theme-zenburn
 	json-reformat
 	restclient
 	coffee-mode
@@ -59,12 +60,6 @@
 				   (global-set-key (kbd "M-g w") 'avy-goto-word-1)
 				   (global-set-key (kbd "M-g e") 'avy-goto-word-0)))
 
-	(:name color-theme-zenburn
-	       :description "Just some alien fruit salad to keep you in the zone"
-	       :type git
-	       :url "https://github.com/bbatsov/zenburn-emacs"
-	       :load "zenburn-theme.el")
-	
 	(:name fill-column-indicator
 	       :before (progn (setq-default fci-rule-column 80))
 	       :after (progn
@@ -161,5 +156,4 @@
 	  (sql-user "alek")
 	  (sql-database "postgres")
 	  (sql-server "localhost")))))
- '(tab-width 4)
- )
+ '(tab-width 4))
