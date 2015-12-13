@@ -31,6 +31,17 @@
 	auto-complete
 	haskell-mode
     rust-mode
+	(:name emacs-racer
+		   :after (progn
+					(setq racer-cmd (substitute-env-vars "${HOME}/.cargo/bin/racer"))
+					(setq racer-rust-src-path (substitute-env-vars "${HOME}/Documents/src/rustc-1.5.0/src"))
+					(add-hook 'rust-mode-hook #'racer-mode)
+					(add-hook 'racer-mode-hook #'eldoc-mode)
+					(add-hook 'racer-mode-hook #'company-mode)
+					(global-set-key (kbd "TAB") #'company-indent-or-complete-common)
+					(setq company-tooltip-align-annotations t)
+					)
+		   )
 	purescript-mode
 	yaml-mode
 	python-mode
@@ -154,13 +165,52 @@
 	   (quote postgres))
 	  (sql-user "postgres")
 	  (sql-database "uaprom")
-	  (sql-server "db.uaprom"))
+	  (sql-server "db.uaprom")
+	  (sql-port 5432))
 	 ("localhost"
 	  (sql-product
 	   (quote postgres))
 	  (sql-user "postgres")
 	  (sql-database "postgres")
-	  (sql-server "localhost")))))
+	  (sql-server "localhost")
+	  (sql-port 5432))
+	 ("analytics-uaprom"
+	  (sql-product (quote postgres))
+	  (sql-user "postgres")
+	  (sql-database "uaprom")
+	  (sql-server "analytics.uaprom")
+	  (sql-port 5437))
+	 ("analytics-ruprom"
+	  (sql-product (quote postgres))
+	  (sql-user "postgres")
+	  (sql-database "ruprom")
+	  (sql-server "analytics.uaprom")
+	  (sql-port 5440))
+	 ("analytics-byprom"
+	  (sql-product (quote postgres))
+	  (sql-user "postgres")
+	  (sql-database "belprom")
+	  (sql-server "analytics.uaprom")
+	  (sql-port 5441))
+	 ("analytics-kzprom"
+	  (sql-product (quote postgres))
+	  (sql-user "postgres")
+	  (sql-database "kazprom")
+	  (sql-server "analytics.uaprom")
+	  (sql-port 5446))
+	 ("analytics-mdprom"
+	  (sql-product (quote postgres))
+	  (sql-user "postgres")
+	  (sql-database "mdprom")
+	  (sql-server "analytics.uaprom")
+	  (sql-port 5439))
+	 ("analytics-cms"
+	  (sql-product (quote postgres))
+	  (sql-user "postgres")
+	  (sql-database "postgres")
+	  (sql-server "analytics.uaprom")
+	  (sql-port 5438))
+	 )))
  '(tab-width 4))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -168,3 +218,12 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;;   (setq fiplr-ignored-globs '((directories (".git" ".svn"))
+;;                               (files ("*.jpg" "*.png" "*.zip" "*~"))))
+(setq fiplr-ignored-globs `(
+							(directories
+							 (".git" ".svn" ".hg" ".bzr" ".build" ".idea"))
+							(files
+							 (".#*" "*~" "*.so" "*.jpg" "*.png" "*.gif" "*.pdf" "*.gz" "*.zip")))
+	  )
