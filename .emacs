@@ -30,7 +30,7 @@
 	clojure-mode
 	auto-complete
 	haskell-mode
-    rust-mode
+	rust-mode
 	(:name emacs-racer
 		   :after (progn
 					(setq racer-cmd (substitute-env-vars "${HOME}/.cargo/bin/racer"))
@@ -170,7 +170,7 @@
 	 ("localhost"
 	  (sql-product
 	   (quote postgres))
-	  (sql-user "postgres")
+	  (sql-user "alek")
 	  (sql-database "postgres")
 	  (sql-server "localhost")
 	  (sql-port 5432))
