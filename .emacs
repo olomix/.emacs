@@ -26,25 +26,23 @@
 			   :after (load-theme 'zenburn t)
 			   )
 		json-reformat
-		restclient
 		coffee-mode
 		multiple-cursors
 		markdown-mode
-		clojure-mode
 		auto-complete
 		haskell-mode
 		rust-mode
-		;; (:name emacs-racer
-		;; 	   :after (progn
-		;; 				(setq racer-cmd (substitute-env-vars "${HOME}/.cargo/bin/racer"))
-		;; 				(setq racer-rust-src-path (substitute-env-vars "${HOME}/Documents/src/rustc-1.5.0/src"))
-		;; 				(add-hook 'rust-mode-hook #'racer-mode)
-		;; 				(add-hook 'racer-mode-hook #'eldoc-mode)
-		;; 				(add-hook 'racer-mode-hook #'company-mode)
-		;; 				(global-set-key (kbd "TAB") #'company-indent-or-complete-common)
-		;; 				(setq company-tooltip-align-annotations t)
-		;; 				)
-		;; 	   )
+		(:name emacs-racer
+			   :after (progn
+						(setq racer-cmd (substitute-env-vars "${HOME}/.cargo/bin/racer"))
+						(setq racer-rust-src-path (substitute-env-vars "${HOME}/Documents/src/rust/src"))
+						(add-hook 'rust-mode-hook #'racer-mode)
+						(add-hook 'racer-mode-hook #'eldoc-mode)
+						(add-hook 'racer-mode-hook #'company-mode)
+						;; (global-set-key (kbd "TAB") #'company-indent-or-complete-common)
+						(setq company-tooltip-align-annotations t)
+						)
+			   )
 		purescript-mode
 		yaml-mode
 		python-mode
